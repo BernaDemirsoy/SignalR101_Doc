@@ -1,0 +1,6 @@
+C:\Users\90538\Desktop\SignalR_Works\SignalR101_\SignalR101_\obj\Debug\net5.0\SignalR101_.csproj.AssemblyReference.cache
+C:\Users\90538\Desktop\SignalR_Works\SignalR101_\SignalR101_\obj\Debug\net5.0\SignalR101_.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\90538\Desktop\SignalR_Works\SignalR101_\SignalR101_\obj\Debug\net5.0\SignalR101_.AssemblyInfoInputs.cache
+C:\Users\90538\Desktop\SignalR_Works\SignalR101_\SignalR101_\obj\Debug\net5.0\SignalR101_.AssemblyInfo.cs
+C:\Users\90538\Desktop\SignalR_Works\SignalR101_\SignalR101_\obj\Debug\net5.0\SignalR101_.csproj.CoreCompileInputs.cache
+C:\Users\90538\Desktop\SignalR_Works\SignalR101_\SignalR101_\obj\Debug\net5.0\SignalR101_.MvcApplicationPartsAssemblyInfo.cache
