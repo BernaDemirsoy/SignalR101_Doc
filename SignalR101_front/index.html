@@ -6,10 +6,67 @@
    <script src="/jquery.min.js"></script>
    <script>
     $(document).ready(()=>{
+        /* We face 2 cases in the connection part 
+            1. The connection is provided but in a while connection is lost. 
+                => using withAutomaticReconnect for solution
+                    => this method tries to connect the server 4 times/periods when the client can not connect with the server.
+                    => periods: 0 sec - 2sec- 10sec - 30sec
+            2. In the beginning, the connection can not be set up.
+                => there is no specific method for the signalr library. We should create our own method for that case.
+                => Start func will be our method.
+        */
         const connection=new signalR.HubConnectionBuilder()
-        .withUrl("https://localhost:7066/myhub").build();
-        connection.start(); //connection with the server side is started.
+        .withUrl("https://localhost:7066/myhub")
+        .withAutomaticReconnect([1000,1000,2000])
+        .build();
+        async function start(){
+            try {
+                await connection.start();
+            } catch (error) {
+                setTimeout(()=>start(),2000); // Every 2 sec this func try to be connected.
+            }
+        }
+        start();
+        //connection.start(); //connection with the server side is started.
 
+        /*During the those 2 cases occurs, 3 state events might be occurred. And There are ready state functions for those 3 events.
+            => onreconnecting: It is the event that is triggered before initiating reconnection attempts.
+            => onreconnected: It is the event that is triggered when a reconnection occurs.
+            => onclose: This is the event that is triggered when reconnection attempts fail.
+        */
+       const state=$("#state");
+
+        connection.onreconnecting(error=>{
+            state.css("background-color","blue");
+            state.css("color","white");
+            state.html("Establishing connection...Please wait...");
+            state.fadeIn(2000,()=>{
+                setTimeout(()=>{
+                    state.fadeOut(2000);
+                },2000)
+            });
+        });
+
+        connection.onreconnected(connectionId=>{
+            state.css("background-color","green");
+            state.css("color","white");
+            state.html("Connection established");
+            state.fadeIn(2000,()=>{
+                setTimeout(()=>{
+                    state.fadeOut(2000);
+                },2000)
+            });
+        });
+        connection.onclose(connectionId=>{
+            state.css("background-color","red");
+            state.css("color","white");
+            state.html("Connection could not be established...");
+            state.fadeIn(2000,()=>{
+                setTimeout(()=>{
+                    state.fadeOut(2000);
+                },2000)
+            });
+        });
         $("#btnSend").click(()=>{
             let message= $("#txtMessage").val();
             //While btnsend button is clicked, the client invoke SendMessageAsync on the server side with message parameters. 
@@ -18,15 +75,18 @@
 
         //This block of codes does receive a message from other clients and puts the message into the div html tag
         connection.on("receiveMessage",message=>{
-        $("div").append(message+"<br>");
+        $("#mssg").append(message+"<br>");
         });
+
+       
     });
     
    </script>
 </head>
 <body>
+    <div id="state" style="display: none;"></div>
     <input type="text" id="txtMessage"/>
     <button id="btnSend">Send</button>
-    <div></div>
+    <div id="mssg"></div>
 </body>
 </html>
