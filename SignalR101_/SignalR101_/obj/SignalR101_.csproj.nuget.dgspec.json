@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_\\SignalR101_\\SignalR101_.csproj": {}
+    "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_Doc\\SignalR101_\\SignalR101_\\SignalR101_.csproj": {}
   },
   "projects": {
-    "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_\\SignalR101_\\SignalR101_.csproj": {
+    "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_Doc\\SignalR101_\\SignalR101_\\SignalR101_.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_\\SignalR101_\\SignalR101_.csproj",
+        "projectUniqueName": "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_Doc\\SignalR101_\\SignalR101_\\SignalR101_.csproj",
         "projectName": "SignalR101_",
-        "projectPath": "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_\\SignalR101_\\SignalR101_.csproj",
+        "projectPath": "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_Doc\\SignalR101_\\SignalR101_\\SignalR101_.csproj",
         "packagesPath": "C:\\Users\\90538\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_\\SignalR101_\\obj\\",
+        "outputPath": "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_Doc\\SignalR101_\\SignalR101_\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

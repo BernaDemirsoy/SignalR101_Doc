@@ -1,19 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <script src="node_modules/@microsoft/signalr/dist/browser/signalr.min.js"></script>
-   <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    
+   <script src="/signalr.min.js"></script>
+   <script src="/jquery.min.js"></script>
    <script>
     $(document).ready(()=>{
         const connection=new signalR.HubConnectionBuilder()
         .withUrl("https://localhost:7066/myhub").build();
-        connection.start();
+        connection.start(); //connection with the server side is started.
 
         $("#btnSend").click(()=>{
             let message= $("#txtMessage").val();
-            alert("click");
+            //While btnsend button is clicked, the client invoke SendMessageAsync on the server side with message parameters. 
             connection.invoke("SendMessageAsync",message).catch(error=>console.log(`While sending message, occure error.${error}`));
         })
+
+        //This block of codes does receive a message from other clients and puts the message into the div html tag
         connection.on("receiveMessage",message=>{
         $("div").append(message+"<br>");
         });

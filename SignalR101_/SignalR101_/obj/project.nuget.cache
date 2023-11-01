@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "NgK4YJGSD3tGaAc8KQkfw++5U50YzOfW81b+EYymHXopEN040M4BbI+YVZKrbsqmrt7NFhMVqsZ/H7otuYnuaA==",
+  "dgSpecHash": "y5+eD8b5KesUnU41zxwxB2iy/fRU37xHbgT0HnjeYh0L5+50Jntc2JsHKhfXJB2MCjWSX1iMjBMX40ObkapWXA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_\\SignalR101_\\SignalR101_.csproj",
+  "projectFilePath": "C:\\Users\\90538\\Desktop\\SignalR_Works\\SignalR101_Doc\\SignalR101_\\SignalR101_\\SignalR101_.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\90538\\.nuget\\packages\\microsoft.aspnetcore.authorization\\2.2.0\\microsoft.aspnetcore.authorization.2.2.0.nupkg.sha512",
     "C:\\Users\\90538\\.nuget\\packages\\microsoft.aspnetcore.connections.abstractions\\2.2.0\\microsoft.aspnetcore.connections.abstractions.2.2.0.nupkg.sha512",
