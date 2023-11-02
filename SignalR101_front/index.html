@@ -35,38 +35,55 @@
             => onclose: This is the event that is triggered when reconnection attempts fail.
         */
        const state=$("#state");
-
-        connection.onreconnecting(error=>{
-            state.css("background-color","blue");
-            state.css("color","white");
-            state.html("Establishing connection...Please wait...");
+        function animation(){
             state.fadeIn(2000,()=>{
                 setTimeout(()=>{
                     state.fadeOut(2000);
                 },2000)
             });
+        }
+        connection.onreconnecting(error=>{
+            state.css("background-color","blue");
+            state.css("color","white");
+            state.html("Establishing connection...Please wait...");
+            animation();
         });
 
         connection.onreconnected(connectionId=>{
             state.css("background-color","green");
             state.css("color","white");
             state.html("Connection established");
-            state.fadeIn(2000,()=>{
-                setTimeout(()=>{
-                    state.fadeOut(2000);
-                },2000)
-            });
+            animation();
         });
         connection.onclose(connectionId=>{
             state.css("background-color","red");
             state.css("color","white");
             state.html("Connection could not be established...");
-            state.fadeIn(2000,()=>{
-                setTimeout(()=>{
-                    state.fadeOut(2000);
-                },2000)
-            });
+            animation();
         });
+
+        connection.on("userJoined",connectionId=>{
+            state.html(`${connectionId} is connected`);
+            state.css("background-color","green");
+            state.css("color","white");
+            animation();
+        });
+
+        connection.on("userLeaved",connectionId=>{
+            state.html(`${connectionId} is left`);
+            state.css("background-color","red");
+            state.css("color","white");
+            animation();
+        });
+
+        connection.on("clientsList",data=>{
+            let text="";
+            $.each(data,(index,item) => {
+                text+=`<li>${item}</li>`
+            });
+            $("#clients").html(text);
+        });
+
         $("#btnSend").click(()=>{
             let message= $("#txtMessage").val();
             //While btnsend button is clicked, the client invoke SendMessageAsync on the server side with message parameters. 
@@ -88,5 +105,8 @@
     <input type="text" id="txtMessage"/>
     <button id="btnSend">Send</button>
     <div id="mssg"></div>
+    <div>
+        <ul id="clients"></ul>
+    </div>
 </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    
+        <script src="/signalr.min.js"></script>
+        <script src="/jquery.min.js"></script>
+        <script>
+         $(document).ready(()=>{
+             /* We face 2 cases in the connection part 
+                 1. The connection is provided but in a while connection is lost. 
+                     => using withAutomaticReconnect for solution
+                         => this method tries to connect the server 4 times/periods when the client can not connect with the server.
+                         => periods: 0 sec - 2sec- 10sec - 30sec
+                 2. In the beginning, the connection can not be set up.
+                     => there is no specific method for the signalr library. We should create our own method for that case.
+                     => Start func will be our method.
+             */
+             const connection=new signalR.HubConnectionBuilder()
+             .withUrl("https://localhost:7066/messagehub")
+             .withAutomaticReconnect([1000,1000,2000])
+             .build();
+             async function start(){
+                 try {
+                     await connection.start();
+                 } catch (error) {
+                     setTimeout(()=>start(),2000); // Every 2 sec this func try to be connected.
+                 }
+             }
+             start();
+             $("#btnSend").click(()=>{
+                 let message= $("#txtMessage").val();
+                 let connectionIds=$("#connectionIds").val().split(",");
+                 //While btnsend button is clicked, the client invoke SendMessageAsync on the server side with message and connectionIds parameters. 
+                 connection.invoke("SendMessageAsync",message,connectionIds).catch(error=>console.log(`While sending message, occure error.${error}`));
+             })
+     
+             //This block of codes does receive a message from other clients and puts the message into the div html tag
+             connection.on("receiveMessage",message=>{
+             $("#mssg").append(message+"<br>");
+             });
+
+             connection.on("showConnectionId",connectionId=>{
+                 $("#connectionId").html(`${connectionId} is connected`);
+             });
+            
+         });
+         
+        </script>
+     </head>
+     <body>
+        <div style="background-color: black;color: white;" id="connectionId"></div>
+         
+         <input type="text" id="txtMessage"/>
+         <textarea id="connectionIds" cols="30" rows="10"></textarea>
+         <button id="btnSend">Send</button>
+         <div id="mssg"></div>
+         
+     </body>
+     </html>
