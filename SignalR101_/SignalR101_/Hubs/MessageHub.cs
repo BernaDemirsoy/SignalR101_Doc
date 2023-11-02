@@ -34,8 +34,24 @@ namespace SignalR101_.Hubs
             #endregion
 
             #region Client
-
+            //It notifies only a specified client among the clients connected to the server.
+            //Clients.Client(connectionIds.FirstOrDefault()).SendAsync("receiveMessage",message);
             #endregion
+
+            #region Clients
+            //It notifies only the specified clients among the clients connected to the server.
+            Clients.Clients(connectionIds).SendAsync("receiveMessage",message);
+            #endregion
+
+            #region Group
+            //It is a function that notifies all clients specified in the group.
+            //It has a few steps.
+            /*
+             * 1. Create a group
+             * 2. Subscribe Clients to the Group
+             */
+            #endregion
+
             #endregion
         }
 
