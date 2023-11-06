@@ -9,8 +9,11 @@ namespace SignalR101_.Hubs
          * 2. Caller
          * 3. Others
          */
-       
-        public async Task SendMessageAsync(string message,IEnumerable<string> connectionIds)
+
+        //public async Task SendMessageAsync(string message,IEnumerable<string> connectionIds)
+        //public async Task SendMessageAsync(string message,string groupName,IEnumerable<string> connectionIds)
+        //public async Task SendMessageAsync(string message, IEnumerable<string> groups)
+        public async Task SendMessageAsync(string message,string groupName)
         {
             #region Caller
             //The type that communicates with the client only sending information to the server
@@ -40,7 +43,7 @@ namespace SignalR101_.Hubs
 
             #region Clients
             //It notifies only the specified clients among the clients connected to the server.
-            Clients.Clients(connectionIds).SendAsync("receiveMessage",message);
+            //Clients.Clients(connectionIds).SendAsync("receiveMessage",message);
             #endregion
 
             #region Group
@@ -50,14 +53,34 @@ namespace SignalR101_.Hubs
              * 1. Create a group
              * 2. Subscribe Clients to the Group
              */
+            //Clients.Group(groupName).SendAsync("receiveMessage", message);
             #endregion
 
+            #region GroupExcept
+            //It allows us to send messages to all clients in the specified group, except the specified clients.
+            //await Clients.GroupExcept(groupName, connectionIds).SendAsync("receiveMessage",message);
+            #endregion
+
+            #region Groups
+            //It is a function that allows us to notify clients in more than one group.
+            //await Clients.Groups(groups).SendAsync("receiveMessage", message);
+            #endregion
+
+            #region OthersInGroup
+            //It is the function that notifies all clients in the group except the client making the notification.
+            await Clients.OthersInGroup(groupName).SendAsync("receiveMessage", message);
+            #endregion
             #endregion
         }
 
         public override async Task OnConnectedAsync()
         {
             await Clients.Caller.SendAsync("showConnectionId", Context.ConnectionId);
+        }
+
+        public async Task addGroup(string connectionId,string groupName)
+        {
+           await  Groups.AddToGroupAsync(connectionId, groupName);
         }
     }
 }

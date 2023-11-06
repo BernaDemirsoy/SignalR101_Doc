@@ -30,29 +30,43 @@
              $("#btnSend").click(()=>{
                  let message= $("#txtMessage").val();
                  let connectionIds=$("#connectionIds").val().split(",");
+                 let groups=$("#txtGroup").val().split(",");
                  //While btnsend button is clicked, the client invoke SendMessageAsync on the server side with message and connectionIds parameters. 
-                 connection.invoke("SendMessageAsync",message,connectionIds).catch(error=>console.log(`While sending message, occure error.${error}`));
+                //  connection.invoke("SendMessageAsync",message,connectionIds).catch(error=>console.log(`While sending message, occure error.${error}`));
+                //This one is for using group function 
+                // connection.invoke("SendMessageAsync",message,$("input[name=group]:checked").val(),connectionIds).catch(error=>console.log(`While sending message, occure error.${error}`));
+                connection.invoke("SendMessageAsync",groups[0]).catch(error=>console.log(`While sending message, occure error.${error}`));
              })
      
              //This block of codes does receive a message from other clients and puts the message into the div html tag
              connection.on("receiveMessage",message=>{
              $("#mssg").append(message+"<br>");
              });
-
+             let _connectionId="";
              connection.on("showConnectionId",connectionId=>{
                  $("#connectionId").html(`${connectionId} is connected`);
+                 _connectionId=connectionId;
              });
             
+             $("#btnAttendToGroup").click(()=>{
+               let groupName= $("input[name=group]:checked").val();
+               connection.invoke("addGroup",_connectionId,groupName).catch(error=>console.log("Errors"));
+             });
          });
          
         </script>
      </head>
      <body>
         <div style="background-color: black;color: white;" id="connectionId"></div>
-         
+
+         <input type="radio" name="group" value="A">A
+         <input type="radio" name="group" value="B">B
+         <input type="radio" name="group" value="C">C
+        <button id="btnAttendToGroup">Attent to Group</button>
          <input placeholder="message" type="text" id="txtMessage"/>
             </br>
         </br>
+        <input placeholder="Groups" type="text" id="txtGroup"/>
          <textarea placeholder="ConnectionId" id="connectionIds" cols="30" rows="10"></textarea>
         </br>
     </br>
