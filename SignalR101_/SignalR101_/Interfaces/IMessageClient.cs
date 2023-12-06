@@ -7,7 +7,7 @@
 
         /*There are connection events methods. One of them is OnConnectedAsyn()
          * That includes
-         * await Clients.All.SendAsync("userJoined",Context.ConnectionId);
+         *await Clients.All.SendAsync("userJoined",Context.ConnectionId);
          * 
          * If not using strongly typed hubs as it Hub<IMessageClient>, this row is open to typing errors 
          * 

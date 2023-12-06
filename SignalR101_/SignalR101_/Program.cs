@@ -28,5 +28,5 @@ app.UseCors();
 app.MapHub<Myhub>("/myhub");
 app.MapHub<MessageHub>("/messagehub");
 app.MapControllers();
-
+    
 app.Run();
